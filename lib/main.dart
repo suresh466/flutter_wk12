@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_wk12/second_screen.dart';
+
+import 'Person.dart';
 
 void main() {
   runApp(const MyApp());
@@ -70,6 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    //class started here
     List<int> numberList = [];
     numberList.add(3);
     numberList.add(4);
@@ -77,6 +81,15 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //Linq with lambda
     var evenNumbers = numberList.where((int i) => i.isEven);
+
+    List<Person> personList = [];
+    personList.add(Person("arunr@gmail.com", "prof", 44));
+    personList.add(Person("suresh@gmail.com", "prof", 42));
+    personList.add(Person("deepak@gmail.com", "prof", 40));
+
+    List<Person> personFiltered = [];
+    personFiltered = personList.where((o) => o.age.isEven).toList();
+
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     //
@@ -93,35 +106,29 @@ class _MyHomePageState extends State<MyHomePage> {
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
-          //
-          // TRY THIS: Invoke "debug painting" (choose the "Toggle Debug Paint"
-          // action in the IDE, or press "p" in the console), to see the
-          // wireframe for each widget.
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
-          ],
-        ),
-      ),
+      body: ListView.builder(
+          padding: const EdgeInsets.all(8),
+          itemCount: personList.length,
+          itemBuilder: (BuildContext context, int index) {
+            return GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                      builder: (context) => SecondScreen(person:personList[index])
+                      )
+                  );
+                },
+                child: Card(
+                  child: Row(
+                    children: <Widget>[
+                      Text(personList[index].email),
+                      Text(personList[index].age.toString()),
+                    ],
+                  ),
+                )
+            );
+          }),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
