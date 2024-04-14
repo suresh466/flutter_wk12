@@ -84,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     List<Person> personList = [];
     personList.add(Person("arunr@gmail.com", "prof", 44));
-    personList.add(Person("suresh@gmail.com", "prof", 42));
+    personList.add(Person("suresh@gmail.com", "prof", 41));
     personList.add(Person("deepak@gmail.com", "prof", 40));
 
     List<Person> personFiltered = [];
@@ -108,22 +108,22 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       body: ListView.builder(
           padding: const EdgeInsets.all(8),
-          itemCount: personList.length,
+          itemCount: personFiltered.length,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
                 onTap: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                      builder: (context) => SecondScreen(person:personList[index])
+                      builder: (context) => SecondScreen(person:personFiltered[index])
                       )
                   );
                 },
                 child: Card(
                   child: Row(
                     children: <Widget>[
-                      Text(personList[index].email),
-                      Text(personList[index].age.toString()),
+                      Text(personFiltered[index].email),
+                      Text(personFiltered[index].age.toString()),
                     ],
                   ),
                 )
